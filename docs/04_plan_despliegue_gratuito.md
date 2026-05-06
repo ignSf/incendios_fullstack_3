@@ -11,24 +11,25 @@ Ambas plataformas ofrecen PostgreSQL serverless gratuito con soporte para datos 
 3. Ve a **Project Settings** -> **Database** y copia tu URI de conexión (Connection String) de la base de datos (asegúrate de poner tu contraseña).
 4. En Supabase, abre el "SQL Editor" y pega el contenido de todos tus scripts ubicados en `db/init/` (en orden, del 01 al 06) y ejecútalos para crear tus tablas, tipos y datos de prueba.
 
-## 2. Backend (Spring Boot): Koyeb o Back4App Containers
-Render actualmente pide tarjeta para verificar despliegues Docker. Para evitar esto, usaremos **[Koyeb](https://www.koyeb.com)** o **[Back4App Containers](https://www.back4app.com/containers)**, que ofrecen despliegues gratuitos de contenedores sin exigir tarjeta de crédito (solo autenticándote con tu cuenta de GitHub).
+## 2. Backend (Spring Boot): Back4App Containers
+Dado que Render y Koyeb ahora exigen verificación con tarjeta de crédito para evitar abusos, la mejor alternativa 100% gratuita que **NO PIDE TARJETA** es **[Back4App Containers](https://www.back4app.com/containers)**.
 
-**Pasos recomendados (Ejemplo con Koyeb):**
+**Pasos en Back4App:**
 1. Sube tu código (la carpeta `back`) a un repositorio en GitHub.
-2. Crea una cuenta en [Koyeb](https://www.koyeb.com) e inicia sesión con tu GitHub.
-3. Haz clic en **"Create Web Service"** y selecciona GitHub. Elige tu repositorio.
-4. En **Builder**, selecciona **Dockerfile**. Koyeb detectará el Dockerfile en tu carpeta `back`.
-5. En la sección **Environment Variables**, configura las variables de entorno de producción:
+2. Entra a [Back4App Containers](https://www.back4app.com/containers) y haz clic en "Sign up". Regístrate con tu cuenta de GitHub.
+3. Haz clic en **"New App"** -> **"Container as a Service"**.
+4. Conecta tu repositorio de GitHub donde tienes el backend.
+5. Back4App detectará automáticamente el `Dockerfile`. 
+6. En el paso de configuración, pon las **Environment Variables** (variables de entorno):
    - `SPRING_PROFILES_ACTIVE`: `prod`
    - `DATABASE_URL`: `jdbc:postgresql://<URL_DE_SUPABASE>:5432/postgres` (Reemplaza con la URL que te dio Supabase).
    - `DB_USER`: `postgres`
    - `DB_PASSWORD`: `tu_contraseña_de_supabase`
    - `JWT_SECRET`: `cualquier_cadena_larga_en_base64_segura`
    - `FRONTEND_URL`: `https://tu-frontend-en-vercel.vercel.app` (Cámbialo después de subir el frontend).
-6. En la sección **Ports**, asegúrate de que esté configurado el puerto `8080`.
-7. Selecciona la región (ej. Washington, D.C.) y en **Instance**, elige la opción **Free** (EcoFree).
-8. Haz clic en **Deploy**. Obtendrás una URL pública como `https://tu-app.koyeb.app`.
+7. En el apartado de "Port" escribe `8080`.
+8. Selecciona el Free Tier y haz clic en **Create App**. 
+9. Espera unos minutos a que se compile tu imagen Docker y se lance. Obtendrás una URL pública como `https://tu-app.b4a.run`.
 
 ## 3. Frontend (React/Vite): Vercel
 [Vercel](https://vercel.com) es la mejor plataforma gratuita para desplegar sitios web estáticos y aplicaciones React.
